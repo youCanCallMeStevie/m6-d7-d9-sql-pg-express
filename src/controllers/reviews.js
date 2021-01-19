@@ -2,7 +2,7 @@ const { apiError } = require("../classes/apiError");
 const Model = require("../helpers/model");
 const Reviews = new Model("reviews");
 
-exports.createReivew = async (req, res, next) => {
+exports.createReview = async (req, res, next) => {
   try {
     const response = await Reviews.save(req.body);
     res.status(201).json({ data: response });
@@ -11,7 +11,7 @@ exports.createReivew = async (req, res, next) => {
   }
 };
 
-exports.getReivews = async (req, res, next) => {
+exports.getReviews = async (req, res, next) => {
   try {
     const response = await Reviews.findOne();
     res.status(200).json({ data: response });
@@ -20,7 +20,7 @@ exports.getReivews = async (req, res, next) => {
   }
 };
 
-exports.getOneReivew = async (req, res, next) => {
+exports.getOneReview = async (req, res, next) => {
   const { reviewId } = req.params;
   try {
     const { rows } = await Reviews.findById(reviewId);
@@ -33,7 +33,7 @@ exports.getOneReivew = async (req, res, next) => {
   }
 };
 
-exports.editReivew = async (req, res, next) => {
+exports.editReview = async (req, res, next) => {
   const { reviewId } = req.params;
   try {
     const response = await Reviews.findByIdAndUpdate(reviewId, req.body);
@@ -46,7 +46,7 @@ exports.editReivew = async (req, res, next) => {
   }
 };
 
-exports.deleteReivew = async (req, res, next) => {
+exports.deleteReview = async (req, res, next) => {
   const { reviewId } = req.params;
   try {
     const { rows } = await Reviews.findByIdAndDelete(reviewId);
