@@ -8,6 +8,7 @@ exports.createAuthor = async (req, res, next) => {
     res.status(201).json({ data: response });
   } catch (error) {
     if (error) throw new apiError();
+    next();
   }
 };
 
@@ -17,6 +18,7 @@ exports.getAuthors = async (req, res, next) => {
     res.json({ data: response });
   } catch (error) {
     if (error) throw new apiError();
+    next();
   }
 };
 
@@ -30,6 +32,7 @@ exports.getOneAuthor = async (req, res, next) => {
     }
   } catch (error) {
     if (error) throw new apiError();
+    next();
   }
 };
 
@@ -43,6 +46,7 @@ exports.editAuthor = async (req, res, next) => {
     }
   } catch (error) {
     if (error) throw new apiError();
+    next();
   }
 };
 
@@ -56,5 +60,6 @@ exports.deleteAuthor = async (req, res, next) => {
     }
   } catch (error) {
     if (error) throw new apiError();
+    next();
   }
 };

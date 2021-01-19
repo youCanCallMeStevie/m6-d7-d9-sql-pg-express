@@ -1,18 +1,13 @@
-
 const router = require("express").Router();
 
-const authorRouter = require("./authors")
-const categoryRouter = require("./categories")
-const articleRouter = require("./articles")
-const reviewRouter = require("./reviews")
+const authorRouter = require("./authors");
+const categoryRouter = require("./categories");
+const articleRouter = require("./articles");
+const reviewRouter = require("./reviews");
 
- 
+router.use("/authors", authorRouter);
+router.use("/categories", categoryRouter);
+router.use("/reviews", reviewRouter);
+router.use("/articles", articleRouter);
 
-router.use("/authors", authorRouter)
-router.use("/categories",categoryRouter)
-router.use("/reviews",reviewRouter)
-router.use("/articles",articleRouter)
-
-
-
-module.exports = router
+module.exports = router;

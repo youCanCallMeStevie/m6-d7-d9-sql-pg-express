@@ -2,6 +2,11 @@ const express = require('express');
 const routes = require("./src/routes");
 const listEndpoints = require('express-list-endpoints');
 const cors = require('cors');
+const {
+    notFoundHandler,
+    badRequestHandler,
+    genericErrorHandler,
+  } = require("./src/helpers/errorHandlers");
 
 
 //INITIAL SETUP
@@ -18,6 +23,9 @@ server.use(express.json());
 server.use("/api", routes);
 
 //ERROR HANDLERS
+server.use(badRequestHandler);
+server.use(notFoundHandler);
+server.use(genericErrorHandler);
 console.log(listEndpoints(server))
 
 

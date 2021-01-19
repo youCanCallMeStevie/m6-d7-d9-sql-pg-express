@@ -8,6 +8,7 @@ exports.createArticle = async (req, res, next) => {
     res.status(201).json({ data: response });
   } catch (error) {
     console.log(error);
+    next();
   }
 };
 
@@ -17,6 +18,7 @@ exports.getArticles = async (req, res, next) => {
     res.status(200).json({ data: response });
   } catch (error) {
     if (error) throw new apiError();
+    next();
   }
 };
 
@@ -30,33 +32,34 @@ exports.getOneArticle = async (req, res, next) => {
     }
   } catch (error) {
     if (error) throw new apiError();
+    next();
   }
 };
 
 exports.editArticle = async (req, res, next) => {
-    const { articleId } = req.params;
-    try {
-      const response = await Articles.findByIdAndUpdate(articleId, req.body);
-      res.status(201).json({ data: response });
-      if (!articleId) {
-        throw new apiError(404, `No article with ${articleId} found`);
+  const { articleId } = req.params;
+  try {
+    const response = await Articles.findByIdAndUpdate(articleId, req.body);
+    res.status(201).json({ data: response });
+    if (!articleId) {
+      throw new apiError(404, `No article with ${articleId} found`);
     }
-    } catch (error) {
-      if (error) throw new apiError();
-    }
-  };
-
-
+  } catch (error) {
+    if (error) throw new apiError();
+    next();
+  }
+};
 
 exports.deleteArticle = async (req, res, next) => {
-    const { articleId } = req.params;
-    try {
-      const { rows } = await Articles.findByIdAndDelete(articleId);
-      res.status(201).json({ data: deleted });
-      if (!articleId) {
-        throw new apiError(404, `No article with ${articleId} found`);
-      }
-    } catch (error) {
-      if (error) throw new apiError();
+  const { articleId } = req.params;
+  try {
+    const { rows } = await Articles.findByIdAndDelete(articleId);
+    res.status(201).json({ data: deleted });
+    if (!articleId) {
+      throw new apiError(404, `No article with ${articleId} found`);
     }
-  };
+  } catch (error) {
+    if (error) throw new apiError();
+    next();
+  }
+};
