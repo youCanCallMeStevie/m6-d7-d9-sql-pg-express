@@ -8,3 +8,11 @@ const {
     deleteArticle
   } = require("../../controllers/articles");
 
+  router.get("/", getArticles )
+  router.get("/:articleId", getOneArticle )
+  router.post("/", createArticle )
+  router.put("/:articleId", editArticle)
+  router.delete("/:articleId", deleteArticle)
+  
+  
+  module.exports = router;

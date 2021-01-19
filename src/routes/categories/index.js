@@ -7,3 +7,12 @@ const {
     editCategory,
     deleteCategory
   } = require("../../controllers/categories");
+
+router.get("/", getCategories )
+router.get("/:categoryId", getOneCategory )
+router.post("/", createCategory )
+router.put("/:categoryId", editCategory)
+router.delete("/:categoryId", deleteCategory)
+
+
+module.exports = router;
