@@ -71,3 +71,5 @@ class Model {
     return response;
   }
 }
+
+module.exports = Model;

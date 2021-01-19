@@ -1,1 +1,22 @@
-CREATE TABLE users (id SERIAL PRIMARY KEY,name VARCHAR(30) NOT NULL,lastname VARCHAR(30) NOT NULL,country VARCHAR(30) NOT NULL);
+CREATE TABLE IF NOT EXISTS 
+
+    articles (
+
+        id SERIAL PRIMARY KEY,
+
+        headLine VARCHAR(50) NOT NULL,
+
+        subHead VARCHAR(50),
+
+        content VARCHAR(2000) NOT NULL,
+
+        cover VARCHAR(500),
+        
+        authorId INTEGER NOT NULL,
+
+        categoryId INTEGER NOT NULL,
+        
+        FOREIGN KEY (authorId) REFERENCES authors,
+
+        FOREIGN KEY (categoryId) REFERENCES categories
+    );

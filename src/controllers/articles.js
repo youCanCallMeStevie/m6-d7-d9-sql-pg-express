@@ -7,7 +7,7 @@ exports.createArticle = async (req, res, next) => {
     const response = await Articles.save(req.body);
     res.status(201).json({ data: response });
   } catch (error) {
-    if (error) throw new apiError();
+    console.log(error);
   }
 };
 

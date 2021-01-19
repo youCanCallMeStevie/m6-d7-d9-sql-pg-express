@@ -1,5 +1,5 @@
 const express = require('express');
-const dotenv = require('dotenv');
+const routes = require("./src/routes");
 const listEndpoints = require('express-list-endpoints');
 const cors = require('cors');
 
@@ -7,7 +7,7 @@ const cors = require('cors');
 //INITIAL SETUP
 
 const server = express();
-dotenv.congif();
+require("dotenv").config();
 const port = process.env.PORT //  3008
 
 //MIDDLEWARES
@@ -15,7 +15,7 @@ server.use(cors());
 server.use(express.json());
 
 //ROUTE
-server.use("/api",services)
+server.use("/api", routes);
 
 //ERROR HANDLERS
 console.log(listEndpoints(server))

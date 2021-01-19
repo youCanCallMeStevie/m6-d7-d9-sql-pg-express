@@ -1,1 +1,14 @@
-CREATE TABLE users (id SERIAL PRIMARY KEY,name VARCHAR(30) NOT NULL,lastname VARCHAR(30) NOT NULL,country VARCHAR(30) NOT NULL);
+CREATE TABLE IF NOT EXISTS 
+    
+    reviews (
+
+        id SERIAL PRIMARY KEY,
+
+        text VARCHAR(150) NOT NULL,
+        rate INTEGER NOT NULL,
+        
+        articleId INTEGER NOT NULL,
+
+        FOREIGN KEY (articleId) REFERENCES articles
+    
+    );
