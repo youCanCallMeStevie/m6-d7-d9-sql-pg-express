@@ -1,6 +1,7 @@
 const ApiError = require("../classes/apiError");
 const Model = require("../helpers/model");
 const Articles = new Model("articles");
+const {query} = require("../helpers/db")
 
 exports.createArticle = async (req, res, next) => {
   try {
@@ -14,7 +15,8 @@ exports.createArticle = async (req, res, next) => {
 
 exports.getArticles = async (req, res, next) => {
   try {
-    const response = await Articles.findOne();
+    // const response = await Articles.findOne();
+const response = await query("SELECT c.name AS category, a.author_id, w.name, w.lastname FROM articles AS a  LEFT JOIN  categories AS c ON c.category_id=a.category_id INNER JOIN authors AS w ON w.author_id=a.author_id")
     res.status(200).json({ data: response });
   } catch (error) {
     console.log(error);
