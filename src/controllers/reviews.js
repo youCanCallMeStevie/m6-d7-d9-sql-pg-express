@@ -1,4 +1,4 @@
-const { apiError } = require("../classes/apiError");
+const ApiError = require("../classes/apiError");
 const Model = require("../helpers/model");
 const Reviews = new Model("reviews");
 
@@ -7,8 +7,8 @@ exports.createReview = async (req, res, next) => {
     const response = await Reviews.save(req.body);
     res.status(201).json({ data: response });
   } catch (error) {
-    if (error) throw new apiError();
-    next();
+    console.log(error);
+    next(error);
   }
 };
 
@@ -17,22 +17,23 @@ exports.getReviews = async (req, res, next) => {
     const response = await Reviews.findOne();
     res.status(200).json({ data: response });
   } catch (error) {
-    if (error) throw new apiError();
-    next();
+    console.log(error);
+    next(error);
   }
 };
 
 exports.getOneReview = async (req, res, next) => {
   const { reviewId } = req.params;
   try {
-    const { rows } = await Reviews.findById(reviewId);
-    res.status(200).json({ data: rows });
-    if (!reviewId) {
-      throw new apiError(404, `No review with ${reviewId} found`);
+    const response = await Reviews.findById(reviewId);
+    if (response.rowCount === 0) {
+      throw new ApiError(404, `No review with ${reviewId} found`);
+    } else {
+      res.status(201).json({ data: response.rows[0] });
     }
   } catch (error) {
-    if (error) throw new apiError();
-    next();
+    console.log(error);
+    next(error);
   }
 };
 
@@ -40,26 +41,28 @@ exports.editReview = async (req, res, next) => {
   const { reviewId } = req.params;
   try {
     const response = await Reviews.findByIdAndUpdate(reviewId, req.body);
-    res.status(201).json({ data: response });
-    if (!reviewId) {
-      throw new apiError(404, `No author with ${reviewId} found`);
+    if (response.rowCount === 0) {
+      throw new ApiError(404, `No review with ${reviewId} found`);
+    } else {
+      res.status(201).json({ data: response.rows[0] });
     }
   } catch (error) {
-    if (error) throw new apiError();
-    next();
+    console.log(error);
+    next(error);
   }
 };
 
 exports.deleteReview = async (req, res, next) => {
   const { reviewId } = req.params;
   try {
-    const { rows } = await Reviews.findByIdAndDelete(reviewId);
-    res.status(201).json({ data: deleted });
-    if (!reviewId) {
-      throw new apiError(404, `No review with ${reviewId} found`);
+    const response = await Reviews.findByIdAndDelete(reviewId);
+    if (response.rowCount === 0) {
+      throw new ApiError(404, `No review with ${reviewId} found`);
+    } else {
+      res.status(200).json({ data: deleted });
     }
   } catch (error) {
-    if (error) throw new apiError();
-    next();
+    console.log(error);
+    next(error);
   }
 };

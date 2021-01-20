@@ -26,10 +26,12 @@ class Model {
     if (!id) {
       throw new Error("Hey you did not provide an id, go back & try again");
     }
-    const query = `DELETE * FROM ${this.name} WHERE id=${parseInt(id, 10)}`;
+    const query = `DELETE FROM ${this.name} WHERE id=${parseInt(id, 10)}`;
     const response = await this.run(query);
     return response;
   }
+
+
 
   async findByIdAndUpdate(id, fields) {
     if (!id) {

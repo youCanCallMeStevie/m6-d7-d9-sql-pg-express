@@ -1,4 +1,4 @@
-const { apiError } = require("../classes/apiError");
+const ApiError = require("../classes/apiError");
 const Model = require("../helpers/model");
 const Authors = new Model("authors");
 
@@ -7,32 +7,33 @@ exports.createAuthor = async (req, res, next) => {
     const response = await Authors.save(req.body);
     res.status(201).json({ data: response });
   } catch (error) {
-    if (error) throw new apiError();
-    next();
+    console.log(error);
+    next(error);
   }
 };
 
 exports.getAuthors = async (req, res, next) => {
   try {
     const response = await Authors.findOne();
-    res.json({ data: response });
+    res.status(200).json({ data: response });
   } catch (error) {
-    if (error) throw new apiError();
-    next();
+    console.log(error);
+    next(error);
   }
 };
 
 exports.getOneAuthor = async (req, res, next) => {
   const { authorId } = req.params;
   try {
-    const { rows } = await Authors.findById(authorId);
-    res.status(200).json({ data: rows });
-    if (!authorId) {
-      throw new apiError(404, `No author with ${authorId} found`);
+    const response = await Authors.findById(authorId);
+    if (response.rowCount === 0) {
+      throw new ApiError(404, `No author with ID ${authorId} found`);
+    } else {
+      res.status(200).json({ data: response.rows[0] });
     }
   } catch (error) {
-    if (error) throw new apiError();
-    next();
+    console.log(error);
+    next(error);
   }
 };
 
@@ -40,26 +41,28 @@ exports.editAuthor = async (req, res, next) => {
   const { authorId } = req.params;
   try {
     const response = await Authors.findByIdAndUpdate(authorId, req.body);
-    res.status(201).json({ data: response });
-    if (!authorId) {
-      throw new apiError(404, `No author with ${authorId} found`);
+    if (response.rowCount === 0) {
+      throw new ApiError(404, `No author with ID ${authorId} found`);
+    } else {
+      res.status(201).json({ data: response.rows[0] });
     }
   } catch (error) {
-    if (error) throw new apiError();
-    next();
+    console.log(error);
+    next(error);
   }
 };
 
 exports.deleteAuthor = async (req, res, next) => {
   const { authorId } = req.params;
   try {
-    const { rows } = await Articles.findByIdAndDelete(authorId);
-    res.status(201).json({ data: deleted });
-    if (!authorId) {
-      throw new apiError(404, `No article with ${authorId} found`);
+    const response = await Authors.findByIdAndDelete(authorId);
+    if (response.rowCount === 0) {
+      throw new ApiError(404, `No author with ID ${authorId} found`);
+    } else {
+      res.status(201).json({ data: deleted });
     }
   } catch (error) {
-    if (error) throw new apiError();
-    next();
+    console.log(error);
+    next(error);
   }
 };
