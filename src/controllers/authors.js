@@ -5,7 +5,7 @@ const Authors = new Model("authors");
 exports.createAuthor = async (req, res, next) => {
   try {
     const response = await Authors.save(req.body);
-    res.status(201).json({ data: response });
+    res.status(201).json({ data: "Author created" });
   } catch (error) {
     console.log(error);
     next(error);
@@ -44,7 +44,7 @@ exports.editAuthor = async (req, res, next) => {
     if (response.rowCount === 0) {
       throw new ApiError(404, `No author with ID ${authorId} found`);
     } else {
-      res.status(201).json({ data: response.rows[0] });
+      res.status(201).json({ data: Updated });
     }
   } catch (error) {
     console.log(error);

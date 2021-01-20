@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS
 
     authors (
 
-        id SERIAL PRIMARY KEY,
+    author_id SERIAL PRIMARY KEY,
 
         name VARCHAR(50) NOT NULL,
 
