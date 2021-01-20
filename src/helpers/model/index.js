@@ -56,10 +56,14 @@ class Model {
         .map(([key, value]) => `${key}='${value}'`)
         .join(" AND ")}`;
       const query = `SELECT * FROM ${this.name} WHERE  ${whereClause};`;
+      //how to join multiple tables
       const response = await this.run(query);
       return response;
     }
   }
+
+
+
   async save(fields) {
     if (!fields || Object.values(fields).length === 0) {
       throw new Error("How can I create without values?");

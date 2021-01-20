@@ -1,6 +1,8 @@
 const ApiError = require("../classes/apiError");
 const Model = require("../helpers/model");
 const Categories = new Model("categories");
+const { query } = require("../helpers/db");
+
 
 exports.createCategory = async (req, res, next) => {
   try {
@@ -16,6 +18,22 @@ exports.getCategories = async (req, res, next) => {
   try {
     const response = await Categories.findOne();
     res.status(200).json({ data: response });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+exports.countCategoryGroups = async (req, res, next) => {
+  try {
+    const response = await query(
+      "SELECT c.name, COUNT (a.category_id) FROM articles AS a INNER JOIN categories AS c ON c.category_id=a.category_id WHERE a.category_id = c.category_id GROUP BY c.name"
+    );
+    if (response.rowCount === 0) {
+      throw new ApiError(404, `No categories found to count`);
+    } else {
+      res.status(200).json({ data: response.rows[0] });
+    }
   } catch (error) {
     console.log(error);
     next(error);
